@@ -43,24 +43,7 @@ interface IWords {
 
 const Board:FC = () => {
 
-  const [words, setWords] = useState([
-    {id: 1, board: 2, order: 1, text: 'She'},
-    {id: 2, board: 2, order: 2, text: 'is'},
-    {id: 3, board: 2, order: 3, text: 'eating'},
-    {id: 4, board: 2, order: 4, text: 'an'},
-    {id: 5, board: 2, order: 5, text: 'apple'},
-    {id: 6, board: 2, order: 6, text: 'and'},
-    {id: 7, board: 2, order: 7, text: 'they'},
-    {id: 8, board: 2, order: 8, text: 'are'},
-    {id: 9, board: 2, order: 9, text: 'eating'},
-    {id: 10, board: 2, order: 10, text: 'bread'},
-  ])
-
-  const [currentWord, setCurrentWord] = useState({} as IWords)
-  const [currentBoard, setCurrentBoard] = useState({} as IWords)
-
-
-  const [randomWords, setRandomWords] = useState([
+  const [inOrder, setInOrder] = useState([
     {id: 1, board: 1, order: 1, text: 'She'},
     {id: 2, board: 1, order: 2, text: 'is'},
     {id: 3, board: 1, order: 3, text: 'eating'},
@@ -73,10 +56,24 @@ const Board:FC = () => {
     {id: 10, board: 1, order: 10, text: 'bread'},
   ])
 
+  const [currentWord, setCurrentWord] = useState({} as IWords)
+
+  const [randomWords, setRandomWords] = useState([
+    {id: 1, board: 2, order: 1, text: 'She'},
+    {id: 2, board: 2, order: 2, text: 'is'},
+    {id: 3, board: 2, order: 3, text: 'eating'},
+    {id: 4, board: 2, order: 4, text: 'an'},
+    {id: 5, board: 2, order: 5, text: 'apple'},
+    {id: 6, board: 2, order: 6, text: 'and'},
+    {id: 7, board: 2, order: 7, text: 'they'},
+    {id: 8, board: 2, order: 8, text: 'are'},
+    {id: 9, board: 2, order: 9, text: 'eating'},
+    {id: 10, board: 2, order: 10, text: 'bread'},
+  ])
+
   function onDragStartHandler(e: React.DragEvent<HTMLDivElement>, word: IWords): void {
     console.log('word', word);
-    setCurrentWord(word)
-    // setWords(words.filter(item => item !== word).map((item, key) => ({...item, order: key+1})))
+    // setCurrentWord(word)
   }
 
   function onDragLeaveHandler(e: React.DragEvent<HTMLDivElement>): void {
@@ -93,16 +90,51 @@ const Board:FC = () => {
   function onDropHandler(e: React.DragEvent<HTMLDivElement>, word: IWords): void {
     e.preventDefault()
     console.log('drop', word);
-    setWords(words.map(w => {
-      if(w.id === word.id) {
-        return {...w, order: currentWord.order}
-      }
-      if(w.id === currentWord.id) {
-        return {...w, order: word.order}
-      }
-      return w
-    }))
-    setCurrentWord({} as IWords)
+
+    // if (currentWord.board === 1 && word.board === 1) {
+    //   setInOrder(inOrder.map(w => {
+    //     if(w.id === word.id) {
+    //       return {...w, order: currentWord.order}
+    //     }
+    //     if(w.id === currentWord.id) {
+    //       return {...w, order: word.order}
+    //     }
+    //     return w
+    //   }))
+    // }
+
+    // if (currentWord.board === 1 && word.board === 2) {
+    //   setCurrentWord({...currentWord, board: 2})
+    //   setRandomWords([...randomWords, currentWord])
+    //   setInOrder(inOrder.map(w => {
+    //     if(w.id === word.id) {
+    //       return {...w, order: currentWord.order}
+    //     }
+    //     if(w.id === currentWord.id) {
+    //       return {...w, order: word.order}
+    //     }
+    //     return w
+    //   }))
+    // }
+    // // cur - board 1 ; word - board 2
+    
+    // if(word.order === 2) {
+    //   setInOrder(inOrder.map(w => {
+    //     if(w.id === word.id) {
+    //       return {...w, order: currentWord.order}
+    //     }
+    //     if(w.id === currentWord.id) {
+    //       return {...w, order: word.order}
+    //     }
+    //     return w
+    //   }))
+    // } else {
+
+    // }
+
+    // setCurrentWord({} as IWords)
+    
+
   }
 
   const sortWords = (a: IWords, b: IWords) => {
@@ -115,7 +147,7 @@ const Board:FC = () => {
   return (
     <Wrapper>
       <Container>
-      {words.sort(sortWords).map(word => 
+      {inOrder.sort(sortWords).map(word => 
         <Word
           onDragStart={(e) => onDragStartHandler(e, word)}
           onDragLeave={(e) => onDragLeaveHandler(e)}
@@ -123,7 +155,6 @@ const Board:FC = () => {
           onDragOver={(e) => onDragOverHandler(e)}
           onDrop={(e) => onDropHandler(e, word)}
           draggable={true}
-          hidden={currentWord.id === word.id}
         >
           {word.text}
         </Word>
@@ -133,6 +164,11 @@ const Board:FC = () => {
       {randomWords.map(word => 
         <Word
           key={word.id}
+          onDragStart={(e) => onDragStartHandler(e, word)}
+          onDragLeave={(e) => onDragLeaveHandler(e)}
+          onDragEnd={(e) => onDragEndHandler(e)}
+          onDragOver={(e) => onDragOverHandler(e)}
+          onDrop={(e) => onDropHandler(e, word)}
           draggable={true}
         >
           {word.text}
