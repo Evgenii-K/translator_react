@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import Title from './components/Title/Title'
 import Subscribe from './components/Subscribe/Subscribe'
 import styled from 'styled-components'
 import Human from './components/Human/Human'
 import Board from './components/Board/Board'
+import Tasks from './components/Tasks'
 
 const Wrapper = styled.div
 `
@@ -42,12 +43,9 @@ const App:FC = () => {
           <Human/>
           <Subscribe/>
         </Dialog>
-        <Board/>
-        <WordsContainer>
-        </WordsContainer>
+        <Tasks/>
       </Container>
     </Wrapper>
-
   )
 }
 
