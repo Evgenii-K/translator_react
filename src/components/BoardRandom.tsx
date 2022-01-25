@@ -18,15 +18,12 @@ const BoardRandom:FC = (props) => {
 
   const { markAsDone } = useContext(CardContext)
 
-  const [{isOver}, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: WordTypes.WORD,
     drop: (item: ITasks, monitor) => {
       if(item.board === 'random') return
       markAsDone(item._id, 'random', '0')
     },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver()
-    })
   })
 
   return (
