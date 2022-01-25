@@ -92,7 +92,7 @@ const Tasks:FC = () => {
       .filter(item => item.board === 'sorted')
       .map(item => item.text).join(' ')
     if(checkedWord !== phraseToTranslate.english) {
-      setShow('Не правильно!')
+      setShow('Something wrong!')
     } else {
       setShow('Верно!')
     }
@@ -143,7 +143,9 @@ const Tasks:FC = () => {
       <Warning
         message={show}
       />
-      <CheckButton/>
+      <CheckButton
+        onClick={check}
+      />
     </CardContext.Provider>
   );
 };

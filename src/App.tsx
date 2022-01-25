@@ -13,6 +13,7 @@ const Wrapper = styled.div
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  font-family: 'Roboto', sans-serif;
 `
 
 const Container = styled.div
@@ -26,13 +27,6 @@ const Dialog = styled.div
   grid-gap: 20px;
   padding: 50px 0;
 `
-
-const WordsContainer = styled.div
-`
-  display: flex;
-  flex-wrap: wrap;
-`
-
 
 const App:FC = () => {
   return (

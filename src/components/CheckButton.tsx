@@ -16,12 +16,22 @@ const ButtonBox = styled.div
   padding: 23px;
   box-sizing: border-box;
   cursor: pointer;
+
+  &:active {
+    background: linear-gradient(91.2deg, #FFFFFF 0%, #F2F2F2 100%);
+    box-shadow: inset -2px -4px 12px #FFFFFF, inset 2px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 88px;
+  }
 `
 
-const CheckButton:FC = () => {
+interface CheckButtonProps {
+  onClick: () => void
+}
+
+const CheckButton:FC<CheckButtonProps> = ({onClick}) => {
   return (
     <ButtonBox
-
+      onClick={onClick}
     >
       Check
     </ButtonBox>
