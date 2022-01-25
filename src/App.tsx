@@ -1,14 +1,14 @@
 import React, { FC } from 'react'
-import Title from './components/Title/Title'
-import Subscribe from './components/Subscribe/Subscribe'
+import Title from './components/Title'
+import Subscribe from './components/Subscribe'
 import styled from 'styled-components'
-import Human from './components/Human/Human'
-import Board from './components/Board/Board'
+import Human from './components/Human'
 import Tasks from './components/Tasks'
+import {phraseToTranslate} from './mocks/Strings'
 
 const Wrapper = styled.div
 `
-  background: #E5E5E5;
+  background: #F5F5F5;
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -41,7 +41,9 @@ const App:FC = () => {
         <Title/>
         <Dialog>
           <Human/>
-          <Subscribe/>
+          <Subscribe
+            phrase={phraseToTranslate.russian}
+          />
         </Dialog>
         <Tasks/>
       </Container>

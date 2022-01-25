@@ -4,8 +4,6 @@ export const WordTypes = {
 
 export interface IWords {
   id: number,
-  // board: number,
-  // order: number,
   text: string
 }
 

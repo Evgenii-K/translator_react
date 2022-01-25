@@ -1,21 +1,27 @@
 import React, { createContext, FC, useCallback, useState } from 'react';
 import { WordTypes, ITasks } from '../models/WordTypes'
 import styled from 'styled-components'
-import TaskCard from './TaskCard';
+import WordCard from './WordCard';
 import { useDrop } from 'react-dnd';
-import TaskDone from './TaskDone';
+import BoardRandom from './BoardRandom';
 import update from 'immutability-helper'
-import { lang, fraz } from '../mocks/Strings'
+import { randomPhraseToTranslate, phraseToTranslate } from '../mocks/Strings'
+import Shadow from './Shadow';
+import Warning from './Warning';
+import CheckButton from './CheckButton';
 
-const Container = styled.div
+const BoardSorted = styled.div
 `
   display: flex;
   flex-wrap: wrap;
-  grid-gap: 10px;
-  margin-bottom: 30px;
-  border: 2px solid red; 
-  padding: 20px;
-  transition: all 1s;
+  grid-gap: 9px;
+  margin-bottom: 46px;
+  padding: 6px;
+  background: linear-gradient( #4B4B4B, transparent 1px);
+  background-size: 46px 44px;
+  background-position: top;
+  height: 77px;
+  position: relative;
 `
 
 export const CardContext = createContext({ 
@@ -25,10 +31,9 @@ export const CardContext = createContext({
 
 const Tasks:FC = () => {
 
-  const fraza = 'She eat apple'
   const [show, setShow] = useState('')
 
-  const [taskList, setTaskList] = useState(lang)
+  const [taskList, setTaskList] = useState(randomPhraseToTranslate)
 
   const markAsDone = (_id:string, type: string, order: string): void => {
     setShow('')
@@ -64,7 +69,7 @@ const Tasks:FC = () => {
     [findCard, taskList, setTaskList],
   )
 
-  const [{isOver}, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: WordTypes.WORD,
     drop: (item: ITasks, monitor) => {
       if(item.board === 'sorted') return
@@ -72,11 +77,7 @@ const Tasks:FC = () => {
         .filter(item => item.board === 'sorted')
         .length.toString()
       markAsDone(item._id, 'sorted', lastOrder)
-      
     },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver()
-    })
   })
 
   const sortWordsByIndex = (a: ITasks, b: ITasks) => {
@@ -90,7 +91,7 @@ const Tasks:FC = () => {
     const checkedWord = taskList
       .filter(item => item.board === 'sorted')
       .map(item => item.text).join(' ')
-    if(checkedWord !== fraz) {
+    if(checkedWord !== phraseToTranslate.english) {
       setShow('Не правильно!')
     } else {
       setShow('Верно!')
@@ -99,14 +100,13 @@ const Tasks:FC = () => {
 
   return (
     <CardContext.Provider value={{markAsDone}}>
-      <Container
+      <BoardSorted
         ref={drop}
       >
-        <h3>Сортированные</h3>
         {taskList
           .filter(task => task.board === 'sorted')
           .map(task => (
-            <TaskCard
+            <WordCard
               key={task._id}
               _id={task._id}
               board={task.board}
@@ -118,13 +118,16 @@ const Tasks:FC = () => {
             />
           ))
         }
-      </Container>
-      <TaskDone>
+      </BoardSorted>
+      <BoardRandom>
+        <Shadow
+          count={randomPhraseToTranslate.length}
+        />
         {taskList
           .filter(task => task.board === 'random')
           .sort(sortWordsByIndex)
           .map(task => (
-            <TaskCard
+            <WordCard
               key={task._id}
               _id={task._id}
               board={task.board}
@@ -136,17 +139,12 @@ const Tasks:FC = () => {
             />
           ))
         }
-      </TaskDone>
-      <h3>
-        {show}
-      </h3>
-      <button
-        onClick={check}
-      >
-        Проверить
-      </button>
+      </BoardRandom>
+      <Warning
+        message={show}
+      />
+      <CheckButton/>
     </CardContext.Provider>
-
   );
 };
 

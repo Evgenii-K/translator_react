@@ -8,13 +8,13 @@ const Container = styled.div
 `
   display: flex;
   flex-wrap: wrap;
-  grid-gap: 10px;
-  margin-bottom: 30px;
-  border: 2px solid red;
-  padding: 20px;
+  grid-gap: 9px;
+  margin-bottom: 46px;
+  padding: 6px;
+  height: 77px;
 `
 
-const TaskDone:FC = (props) => {
+const BoardRandom:FC = (props) => {
 
   const { markAsDone } = useContext(CardContext)
 
@@ -33,10 +33,9 @@ const TaskDone:FC = (props) => {
     <Container
       ref={drop}
     >
-      <h3>Не сортированные</h3>
       {props.children}
     </Container>
   );
 };
 
-export default TaskDone;
+export default BoardRandom;

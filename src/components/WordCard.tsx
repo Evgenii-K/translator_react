@@ -8,9 +8,8 @@ const Wrapper = styled.div
   z-index:  10;
   width: 70px;
   height: 30px;
-  background: ${props => props.hidden ? 'transparent' : '#FFFFFF'};
-  border: 1px solid ${props => props.hidden ? 'transparent' : '#C9C9C9'};
-  color: ${props => props.hidden ? 'transparent' : ''};
+  background: #FFFFFF;
+  border: 1px solid #C9C9C9;
   box-sizing: border-box;
   box-shadow: 0px 8px 4px -6px rgba(0, 0, 0, 0.25);
   border-radius: 13px;
@@ -24,7 +23,7 @@ const Wrapper = styled.div
   cursor: grab;
 `
 
-const TaskCard:FC<ITasksProps> = ({  
+const WordCard:FC<ITasksProps> = ({  
   _id, 
   board, 
   index,
@@ -74,4 +73,4 @@ const TaskCard:FC<ITasksProps> = ({
   );
 };
 
-export default TaskCard;
+export default WordCard;

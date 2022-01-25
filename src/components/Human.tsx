@@ -38,7 +38,6 @@ const BottomCircle = styled.div
   transform: rotate(180deg);
 `
 
-
 const Human:FC = () => {
   return (
     <Container>
