@@ -21,7 +21,6 @@ const ShadowBox = styled.div
 `
 
 const CountOfShadowBox = (count: number) => {
-  console.log(Array.from({length: Math.ceil(count/6) * 6}, (v, k) => k).length);
   return Array.from({length: Math.ceil(count/6) * 6}, (v, k) => k)
 }
 

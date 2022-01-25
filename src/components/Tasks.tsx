@@ -31,6 +31,8 @@ export const CardContext = createContext({
 
 const Tasks:FC = () => {
 
+  const synth = window.speechSynthesis;
+
   const [show, setShow] = useState('')
 
   const [taskList, setTaskList] = useState(randomPhraseToTranslate)
@@ -94,7 +96,8 @@ const Tasks:FC = () => {
     if(checkedWord !== phraseToTranslate.english) {
       setShow('Something wrong!')
     } else {
-      setShow('Верно!')
+      const textToSpeech = new SpeechSynthesisUtterance(checkedWord)
+      synth.speak(textToSpeech)
     }
   }
 
